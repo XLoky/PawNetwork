@@ -60,8 +60,57 @@ const changeVideo = (e) => {
         center.classList.replace('center','left');
         left.classList.replace('left','leftleft');
     }
-    
 }
+
+document.querySelector('.top-slider__left-arrow').addEventListener('click',(e)=>{
+    let leftleft;
+    let left;
+    let center;
+    let right;
+    let rightright;
+    for(let i = 0; i < 4; i++){
+        for( const video of videos ) {
+            if(video.classList[0] == 'leftleft') leftleft = video;
+            if(video.classList[0] == 'left') left = video;
+            if(video.classList[0] == 'center') center = video;
+            if(video.classList[0] == 'right') right = video;
+            if(video.classList[0] == 'rightright') rightright = video;
+        }
+        center.pause();
+        right.play();
+
+        leftleft.classList.replace('leftleft','rightright');
+        rightright.classList.replace('rightright','right');
+        right.classList.replace('right','center');
+        center.classList.replace('center','left');
+        left.classList.replace('left','leftleft');
+    }
+})
+
+document.querySelector('.top-slider__right-arrow').addEventListener('click',(e)=>{
+    let leftleft;
+    let left;
+    let center;
+    let right;
+    let rightright;
+    for(let i = 0; i < 1; i++){
+        for( const video of videos ) {
+            if(video.classList[0] == 'leftleft') leftleft = video;
+            if(video.classList[0] == 'left') left = video;
+            if(video.classList[0] == 'center') center = video;
+            if(video.classList[0] == 'right') right = video;
+            if(video.classList[0] == 'rightright') rightright = video;
+        }
+        center.pause();
+        right.play();
+
+        leftleft.classList.replace('leftleft','rightright');
+        rightright.classList.replace('rightright','right');
+        right.classList.replace('right','center');
+        center.classList.replace('center','left');
+        left.classList.replace('left','leftleft');
+    }
+})
 
 for(const video of videos){
     console.log(video)
@@ -290,6 +339,7 @@ const scrollToCat = () => scroll(0, document.getElementById(followed[followed.le
 const changeFollowList = (add,e,catName) => {
     if(add){
         let listItemCloned = document.querySelector(".list__item").cloneNode(true);
+        listItemCloned.style.display = 'flex';
         listItemCloned.href = `#${e.target.parentElement.parentElement.parentElement.parentElement.id}`;
         listItemCloned.children[0].children[0].src = e.target.parentElement.parentElement.children[0].children[0].src;
         listItemCloned.children[1].textContent = e.target.parentElement.parentElement.children[1].textContent;
