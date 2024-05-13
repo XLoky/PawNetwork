@@ -24,6 +24,19 @@ const commentPreset =
     ]
 }
 
+
+const uploadInput = document.getElementById('uploadInput');
+const filereader = new FileReader();
+uploadInput.addEventListener('change',(e)=>{
+    filereader.readAsDataURL(uploadInput.files[0]);
+    filereader.addEventListener('load',(e)=>{
+        console.log(e.currentTarget.result)
+    })
+});
+uploadInput.addEventListener('dragover',(e)=>{
+    e.preventDefault();
+});
+
 document.querySelector(".loading").style.left = `${document.querySelector("main").clientWidth / 2 + 330}px`;
 
 const changeVideo = (e) => {
