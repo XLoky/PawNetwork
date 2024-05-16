@@ -5,7 +5,9 @@ let followed = [];
 const videos = document.querySelectorAll('video');
 const catTreeComfirmationScreen = document.querySelector('.cat-tree-open-comfirmation');
 let catTreeScreen = document.querySelector('.cat-tree');
-const selfCommentImgSrc = `pfp/${Math.floor(Math.random() * 14) + 1}.webp`
+const uploadScreen = document.querySelector('.upload-screen');
+const editPostScreen = document.querySelector('.edit-post-screen');
+const selfCommentImgSrc = `pfp/${Math.floor(Math.random() * 14) + 1}.webp`;
 const commentPreset = 
 {
     name: 
@@ -25,16 +27,41 @@ const commentPreset =
 }
 
 
+document.querySelector('.container__upload').addEventListener('click',()=>{
+    uploadScreen.style.display = 'flex';
+    uploadScreen.classList.add('popup');
+})
+
 const uploadInput = document.getElementById('uploadInput');
 const filereader = new FileReader();
 uploadInput.addEventListener('change',(e)=>{
     filereader.readAsDataURL(uploadInput.files[0]);
     filereader.addEventListener('load',(e)=>{
-        console.log(e.currentTarget.result)
+        console.log(e)
+        if(uploadInput.files[0].name.includes('.png') || uploadInput.files[0].name.includes('.jpg') || uploadInput.files[0].name.includes('.jpeg')){
+            // uploadScreen.style.display = 'none';
+            uploadScreen.classList.remove('popup');
+            uploadScreen.classList.add('unpopup');
+            editPostScreen.style.display = 'flex';
+            editPostScreen.classList.add('popup');
+            document.querySelector('.edit-post-screen__img').src = e.currentTarget.result;
+            setTimeout(() => {
+                uploadScreen.classList.remove('unpopup');
+                uploadScreen.style.display = 'none';
+            }, 200);
+        }
     })
 });
 uploadInput.addEventListener('dragover',(e)=>{
     e.preventDefault();
+    document.querySelector('.upload-screen__filereader-box').setAttribute('style','filter: brightness(.85)');
+});
+uploadInput.addEventListener('drop',()=>{
+    document.querySelector('.upload-screen__filereader-box').setAttribute('style','filter: brightness(1)');
+})
+uploadInput.addEventListener('dragleave',()=>{
+    document.querySelector('.upload-screen__filereader-box').setAttribute('style','filter: brightness(1)');
+    console.count()
 });
 
 document.querySelector(".loading").style.left = `${document.querySelector("main").clientWidth / 2 + 330}px`;
@@ -308,7 +335,7 @@ const generatePost = () => {
 
 const comment = e => {
     const text = e.target.parentElement.children[0].value;
-    if(text != "" && !e.target.classList.contains("commented")){
+    if(text != "" && !e.target.classList.contains("commented") && e.target.parentElement.children[0].classList[0] == 'input-bar__text'){
         console.log(e.target.parentElement.parentElement);
         let pfp = document.createElement("DIV");
         pfp.classList.add("comment__profile-picture");
@@ -434,5 +461,70 @@ addEventListener("scroll",e => {
             }
         }, 500);
     }
+});
+
+const filterStrenghtInput = document.querySelector('.edit-post-screen__filters-strenth-drag');
+const filters = document.querySelectorAll('.edit-post-screen__filter');
+const editPostImg = document.querySelector('.edit-post-screen__img');
+
+document.querySelector('.edit-post-screen__filters-drag').addEventListener('input',(e)=>{
+    const input = document.querySelector('.edit-post-screen__filters-drag');
+    const filtersDiv = document.querySelector('.edit-post-screen__filters-div');
+    filtersDiv.scroll(filtersDiv.scrollWidth * (input.value / 100) / 2, 0);
+});
+
+let filterStrenghtCoeficient = 1;
+let selectedFilter;
+filterStrenghtInput.addEventListener('input',(e)=>{
+    if (selectedFilter == 'hue-rotate'){
+        filterStrenghtInput.max = 360;
+        filterStrenghtCoeficient = filterStrenghtInput.value;
+        editPostImg.style.filter = `${selectedFilter}(${filterStrenghtCoeficient}deg)`;
+    } else {
+        filterStrenghtCoeficient = filterStrenghtInput.value / 50;
+        editPostImg.style.filter = `${selectedFilter}(${filterStrenghtCoeficient})`;
+    }
 })
+
+for(let i of filters){
+    i.addEventListener('click',(e)=>{
+        switch (i.textContent) {
+            case 'SEPIA': 
+                filterStrenghtInput.max = 100;
+                editPostImg.style.filter = `sepia(${filterStrenghtCoeficient})`; 
+                selectedFilter = 'sepia';
+                filterStrenghtInput.value = 50;
+            break;
+            case 'GRAYSCALE': 
+                filterStrenghtInput.max = 100;
+                editPostImg.style.filter = `grayscale(${filterStrenghtCoeficient})`; 
+                selectedFilter = 'grayscale';
+                filterStrenghtInput.value = 50;
+            break;
+            case 'INVERT': 
+                filterStrenghtInput.max = 100;
+                editPostImg.style.filter = `invert(${filterStrenghtCoeficient})`; 
+                selectedFilter = 'invert';
+                filterStrenghtInput.value = 50;
+            break;
+            case 'SATURATE': 
+                filterStrenghtInput.max = 100;
+                editPostImg.style.filter = `saturate(${filterStrenghtCoeficient})`; 
+                selectedFilter = 'saturate';
+                filterStrenghtInput.value = 50;
+            break;
+            case 'CONTRAST': 
+                filterStrenghtInput.max = 100;
+                editPostImg.style.filter = `contrast(${filterStrenghtCoeficient})`; 
+                selectedFilter = 'contrast';
+                filterStrenghtInput.value = 50;
+            break;
+            case 'HUE ROTATE': 
+                editPostImg.style.filter = `hue-rotate(${filterStrenghtCoeficient}deg)`; 
+                selectedFilter = 'hue-rotate';
+            break;
+        }
+    })
+}
+
 getApi()

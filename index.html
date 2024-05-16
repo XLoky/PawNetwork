@@ -91,13 +91,40 @@
         </div>
     </div>
 
-    <div class="upload-screen">
+    <div class="upload-screen" style="display: none;">
         <div class="upload-screen__div">
             <h4>SHARING A NICE STORY IS A BIG PART OF THE PAW NETWORK COMMUNITY, GO AHEAD AND TRY IT OUT!</h4>
             <div class="upload-screen__filereader-box">
                 <h4>CLICK HERE OR DRAG A NICE PHOTO!</h4>
                 <i class="fa-regular fa-square-plus"></i>
                 <input type="file" id="uploadInput">
+            </div>
+        </div>
+    </div>
+
+    <div class="edit-post-screen" style="display: none;">
+        <h4>EDIT YOUR POST</h4>
+        <div class="edit-post-screen__div">
+            <div class="edit-post-screen__img-container">
+                <img class="edit-post-screen__img">
+            </div>
+            <div class="edit-post-screen__edit-desc">
+                <h4>EDIT YOUR DESCRIPTION</h4>
+                <textarea id="textareaDesc" spellcheck="false"></textarea>
+                <h4>FILTERS</h4>
+                <div class="edit-post-screen__filters-div">
+                    <div class="edit-post-screen__filter">SEPIA</div>
+                    <div class="edit-post-screen__filter">GRAYSCALE</div>
+                    <div class="edit-post-screen__filter">INVERT</div>
+                    <div class="edit-post-screen__filter">SATURATE</div>
+                    <div class="edit-post-screen__filter">CONTRAST</div>
+                    <div class="edit-post-screen__filter">HUE ROTATE</div>
+                    <div class="edit-post-screen__filter">SEPIA</div>
+                    <div class="edit-post-screen__filter">SEPIA</div>
+                </div>
+                <input type="range" class="edit-post-screen__filters-drag" value="0">
+                <h4>FILTER STRENGHT</h4>
+                <input type="range" class="edit-post-screen__filters-strenth-drag">
             </div>
         </div>
     </div>
