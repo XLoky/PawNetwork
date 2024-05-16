@@ -27,15 +27,14 @@
 }
 html{
     scroll-behavior: smooth;
-    min-width: 100vw;
+    min-height: 100vh;
 }
 body{
     position: relative;
     display: grid;
-    width: 100vw;
     grid-template-columns: 360px 1fr;
     grid-template-rows: 1fr;
-    background: linear-gradient(var(--color-one), var(--color-one-dark));
+    background: linear-gradient(var(--color-one), var(--color-one-dark)) no-repeat;
     overflow-x: hidden;
 }
 gridfix{
@@ -429,12 +428,11 @@ main{
 }
 
 .loading{
-    position: absolute;
+    position: relative;
     height: 16px;
     width: 50px;
     display: flex;
     justify-content: space-between;
-    bottom: -48px;
 }
 .loading__dot{
     height: 14px;
@@ -457,7 +455,7 @@ main{
     0%{
 
     }100%{
-        transform: translateY(-30px);
+        transform: translateY(-20px);
     }
 }
 .cat-tree-open-comfirmation{
@@ -714,6 +712,9 @@ main{
     font-size: 1em;
     box-shadow: 0 0 4px var(--color-four-darker) inset;
 }
+.edit-post-screen__edit-desc textarea::placeholder{
+    color: var(--color-four-darker);
+}
 .edit-post-screen__filters-div{
     display: flex;
     padding: 16px;
@@ -726,7 +727,6 @@ main{
 .edit-post-screen__filter{
     height: 48px;
     padding: 0 26px;
-    max-width: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -740,7 +740,41 @@ main{
     cursor: pointer;
     transition: transform .3s, background .3s;
 }
+.edit-post-screen__filter:nth-child(6){
+    min-width: 170px;
+}
 .edit-post-screen__filter:hover{
     transform: scale(95%);
     background-color: #333;
+}
+.edit-post-screen__share-btn{
+    margin-top: auto;
+    width: 100%;
+    height: 80px;
+    border-radius: 12px;
+    font-size: 1.2em;
+    box-shadow: 0 0 4px #0004;
+    transition: background .3s, color .3s;
+    cursor: pointer;
+}
+.edit-post-screen__share-btn:hover{
+    background-color: #222;
+    color: #eee;
+}
+
+@media screen and (max-width: 1500px) {
+    .upload-screen__div > h4{
+        font-size: 2vw;
+        color: #eee;
+        text-shadow: 1px 1px 4px #0008;
+    }
+    .upload-screen__filereader-box h4{
+        color: #eee;
+        font-size: 1.5vw;
+        width: 60%;
+        text-align: center;
+    }
+    .upload-screen__filereader-box i{
+        font-size: 8vw;
+    }
 }

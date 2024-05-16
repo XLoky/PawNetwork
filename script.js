@@ -345,7 +345,7 @@ const comment = e => {
 
         let profileName = document.createElement("DIV");
         profileName.classList.add("comment__profile-name");
-        profileName.textContent = "ME: "
+        profileName.textContent = "YOU: "
 
         let p = document.createElement("DIV");
         p.classList.add("comment__p");
@@ -442,7 +442,7 @@ const getApi = async () => {
 };
 
 addEventListener("scroll",e => {
-    if(scrollY + document.querySelector("aside").clientHeight - 48 >= document.body.clientHeight){ //ASIDE ACTS LIKE AN 1VH
+    if(scrollY + document.querySelector("aside").clientHeight >= document.body.clientHeight){ //ASIDE ACTS LIKE AN 1VH
         console.log("ahora");
         setTimeout(() => {
             if(scrollY != 0){
@@ -470,7 +470,7 @@ const editPostImg = document.querySelector('.edit-post-screen__img');
 document.querySelector('.edit-post-screen__filters-drag').addEventListener('input',(e)=>{
     const input = document.querySelector('.edit-post-screen__filters-drag');
     const filtersDiv = document.querySelector('.edit-post-screen__filters-div');
-    filtersDiv.scroll(filtersDiv.scrollWidth * (input.value / 100) / 2, 0);
+    filtersDiv.scroll(filtersDiv.scrollWidth * (input.value / 100) / 2.3, 0);
 });
 
 let filterStrenghtCoeficient = 1;
@@ -490,34 +490,39 @@ for(let i of filters){
     i.addEventListener('click',(e)=>{
         switch (i.textContent) {
             case 'SEPIA': 
+                filterStrenghtInput.value = 50;
+                filterStrenghtCoeficient = 1;
                 filterStrenghtInput.max = 100;
                 editPostImg.style.filter = `sepia(${filterStrenghtCoeficient})`; 
                 selectedFilter = 'sepia';
-                filterStrenghtInput.value = 50;
             break;
             case 'GRAYSCALE': 
+                filterStrenghtInput.value = 50;
+                filterStrenghtCoeficient = 1;
                 filterStrenghtInput.max = 100;
                 editPostImg.style.filter = `grayscale(${filterStrenghtCoeficient})`; 
                 selectedFilter = 'grayscale';
-                filterStrenghtInput.value = 50;
             break;
             case 'INVERT': 
+                filterStrenghtInput.value = 50;
+                filterStrenghtCoeficient = 1;
                 filterStrenghtInput.max = 100;
                 editPostImg.style.filter = `invert(${filterStrenghtCoeficient})`; 
                 selectedFilter = 'invert';
-                filterStrenghtInput.value = 50;
             break;
             case 'SATURATE': 
+                filterStrenghtInput.value = 50;
+                filterStrenghtCoeficient = 1;
                 filterStrenghtInput.max = 100;
                 editPostImg.style.filter = `saturate(${filterStrenghtCoeficient})`; 
                 selectedFilter = 'saturate';
-                filterStrenghtInput.value = 50;
             break;
             case 'CONTRAST': 
+                filterStrenghtInput.value = 50;
+                filterStrenghtCoeficient = 1;
                 filterStrenghtInput.max = 100;
                 editPostImg.style.filter = `contrast(${filterStrenghtCoeficient})`; 
                 selectedFilter = 'contrast';
-                filterStrenghtInput.value = 50;
             break;
             case 'HUE ROTATE': 
                 editPostImg.style.filter = `hue-rotate(${filterStrenghtCoeficient}deg)`; 
@@ -527,4 +532,97 @@ for(let i of filters){
     })
 }
 
+const shareBtn = document.querySelector('.edit-post-screen__share-btn');
+shareBtn.addEventListener('click',(e)=>{
+
+    editPostScreen.classList.add('unpopup');
+    setTimeout(() => {
+        editPostScreen.style.display = 'none';
+        editPostScreen.classList.remove('popup');
+        editPostScreen.classList.remove('unpopup');
+    }, 300);
+
+    const catpost = document.createElement('DIV');
+        catpost.classList.add('cat-post'); catpost.id = `cat${catCount}`; catpost.setAttribute('followers',1);
+
+        const catPostImgContainer = document.createElement('DIV');
+        catPostImgContainer.classList.add('cat-post__img-container');
+        const postImgContainerImg = document.createElement('IMG');
+        postImgContainerImg.classList.add('post-img-container__img');
+        postImgContainerImg.src = document.querySelector('.edit-post-screen__img').src;
+        postImgContainerImg.style.filter = `${selectedFilter}(${filterStrenghtCoeficient})`;
+        catPostImgContainer.style.height = '656px';
+        catPostImgContainer.appendChild(postImgContainerImg);
+
+        const catPostDesc = document.createElement('DIV');
+        catPostDesc.classList.add('cat-post__description');
+        const descriptionProfile = document.createElement('DIV');
+        descriptionProfile.classList.add('description__profile');
+        const profileImgContainer = document.createElement('DIV');
+        profileImgContainer.classList.add('profile__img-container');
+        const imgContainerImg = document.createElement('IMG');
+        imgContainerImg.classList.add('img-container__img');
+        imgContainerImg.src = selfCommentImgSrc;
+        profileImgContainer.appendChild(imgContainerImg);
+        const h4 = document.createElement('H4');
+        h4.classList.add('profile__h4');
+        h4.innerHTML = 'YOU';
+        const profileFollow = document.createElement('DIV');
+        profileFollow.classList.add('profile__follow')
+        const i = document.createElement('I');
+        i.classList.add('fa-regular');
+        i.classList.add('fa-heart');
+        profileFollow.appendChild(i);
+        descriptionProfile.appendChild(profileImgContainer);
+        descriptionProfile.appendChild(h4);
+        descriptionProfile.appendChild(profileFollow);
+        const p = document.createElement('P');
+        p.classList.add('description__p'),
+        p.innerHTML = document.getElementById('textareaDesc').value;
+        catPostDesc.appendChild(descriptionProfile);
+        catPostDesc.appendChild(p);
+
+        const catPostComments = document.createElement('DIV');
+        catPostComments.classList.add('cat-post__comments')
+        const commentsComment = document.createElement('DIV');
+        commentsComment.classList.add('comments__comment')
+        const commentProfilePicture = document.createElement('DIV');
+        commentProfilePicture.classList.add('comment__profile-picture')
+        const profilePictureImg = document.createElement('IMG');
+        profilePictureImg.src = `pfp/${Math.floor(Math.random() * 14) + 1}.webp`;
+        commentProfilePicture.appendChild(profilePictureImg);
+        const commentProfileName = document.createElement('DIV');
+        commentProfileName.classList.add('comment__profile-name');
+        commentProfileName.innerHTML = commentPreset.name[Math.floor(Math.random() * commentPreset.name.length)] + ":";
+        const commentP = document.createElement('DIV');
+        commentP.classList.add('comment__p');
+        commentP.innerHTML = commentPreset.comment[Math.floor(Math.random() * commentPreset.comment.length)];
+        commentsComment.appendChild(commentProfilePicture);
+        commentsComment.appendChild(commentProfileName);
+        commentsComment.appendChild(commentP);
+
+        const commentsInputBar = document.createElement('DIV');
+        commentsInputBar.classList.add('comments__input-bar');
+        const input1 = document.createElement('INPUT');
+        input1.type = 'text'; input1.placeholder = 'Add a comment...';
+        input1.classList.add('input-bar__text'); input1.spellcheck = 'false';
+        const input2 = document.createElement('INPUT');
+        input2.type = 'button'; input2.value = 'Send';
+        commentsInputBar.appendChild(input1);
+        commentsInputBar.appendChild(input2);
+
+        catPostComments.appendChild(commentsComment);
+        catPostComments.appendChild(commentsInputBar);
+
+        catpost.appendChild(catPostImgContainer);
+        catpost.appendChild(catPostDesc);
+        catpost.appendChild(catPostComments);
+        
+        document.querySelector('main').appendChild(catpost);
+
+    setTimeout(() => {
+        scroll(0,document.documentElement.scrollHeight - 1)
+    }, 50);
+
+})
 getApi()
