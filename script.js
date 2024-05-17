@@ -470,7 +470,7 @@ const editPostImg = document.querySelector('.edit-post-screen__img');
 document.querySelector('.edit-post-screen__filters-drag').addEventListener('input',(e)=>{
     const input = document.querySelector('.edit-post-screen__filters-drag');
     const filtersDiv = document.querySelector('.edit-post-screen__filters-div');
-    filtersDiv.scroll(filtersDiv.scrollWidth * (input.value / 100) / 2.3, 0);
+    filtersDiv.scroll(filtersDiv.scrollWidth * (input.value / 100) - filtersDiv.clientWidth * (input.value / 100), 0);
 });
 
 let filterStrenghtCoeficient = 1;
@@ -624,5 +624,25 @@ shareBtn.addEventListener('click',(e)=>{
         scroll(0,document.documentElement.scrollHeight - 1)
     }, 50);
 
+})
+
+document.querySelector('.upload-screen__close').addEventListener('click',(e)=>{
+    uploadScreen.classList.add('unpopup');
+    setTimeout(() => {
+        uploadScreen.style.display = 'none';
+        uploadScreen.classList.remove('unpopup');
+        uploadScreen.classList.remove('popup');
+
+    }, 300);
+});
+
+document.querySelector('.edit-post-screen__close').addEventListener('click',(e)=>{
+    editPostScreen.classList.add('unpopup');
+    setTimeout(() => {
+        editPostScreen.style.display = 'none';
+        editPostScreen.classList.remove('unpopup');
+        editPostScreen.classList.remove('popup');
+
+    }, 300);
 })
 getApi()

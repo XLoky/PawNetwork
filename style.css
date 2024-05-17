@@ -60,6 +60,16 @@ aside{
     justify-content: space-between;
     gap: 100px;
 }
+.container__placeholder h4{
+    font-size: 28px;
+    text-align: center;
+    opacity: .3;
+}
+.container__placeholder h4 span{
+    font-size: 28px;
+    text-align: center;
+    opacity: .6;
+}
 .container__followed{
     width: 100%;
     display: flex;
@@ -591,7 +601,19 @@ main{
     background-color: #0004;
     z-index: 1000000
 }
+.upload-screen__close, .edit-post-screen__close{
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    cursor: pointer;
+}
+.upload-screen__close i, .edit-post-screen__close i{
+    font-size: 42px;
+    text-shadow: 1px 1px 4px #0008;
+    color: #eee;
+}
 .upload-screen__div{
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -663,6 +685,7 @@ main{
     text-shadow: 1px 1px 4px #0008;
 }
 .edit-post-screen__div{
+    position: relative;
     display: grid;
     grid-template-columns: repeat(2,1fr);
     grid-template-rows: 1fr;
@@ -760,6 +783,9 @@ main{
 .edit-post-screen__share-btn:hover{
     background-color: #222;
     color: #eee;
+}
+.edit-post-screen__filters-drag{
+    width: 80%;
 }
 
 @media screen and (max-width: 1500px) {
