@@ -44,6 +44,11 @@ uploadInput.addEventListener('change',(e)=>{
             uploadScreen.classList.add('unpopup');
             editPostScreen.style.display = 'flex';
             editPostScreen.classList.add('popup');
+
+            document.getElementById('textareaDesc').value = '';
+            document.querySelector('.edit-post-screen__filters-strenth-drag').value = 50;
+            document.querySelector('.edit-post-screen__img').style.filter = null;
+
             document.querySelector('.edit-post-screen__img').src = e.currentTarget.result;
             setTimeout(() => {
                 uploadScreen.classList.remove('unpopup');
@@ -411,6 +416,12 @@ const follow = e => {
         }
         changeFollowList(false,e,e.target.parentElement.parentElement.children[1].textContent); //SECOND PARAMETER = CAT NAME, MAY BE NECCESARY TO DELETE IT FROM THE LIST
     }
+
+    if(followed.length == 0){
+        document.querySelector('.container__placeholder').style.display = 'block';
+    }else{
+        document.querySelector('.container__placeholder').style.display = 'none';
+    }
 }
 
 const getApi = async () => {
@@ -457,7 +468,11 @@ addEventListener("scroll",e => {
                 i.addEventListener("click",follow);
             }
             for(let i of document.querySelectorAll('.cat-post__img-container')){
-                i.addEventListener('click',cattree)
+                if(i.classList.includes('sharedPost')){
+                    
+                }else{
+                    i.addEventListener('click',cattree);
+                }
             }
         }, 500);
     }
@@ -617,6 +632,8 @@ shareBtn.addEventListener('click',(e)=>{
         catpost.appendChild(catPostImgContainer);
         catpost.appendChild(catPostDesc);
         catpost.appendChild(catPostComments);
+
+        catPostImgContainer.classList.add('sharedPost');
         
         document.querySelector('main').appendChild(catpost);
 
@@ -644,5 +661,12 @@ document.querySelector('.edit-post-screen__close').addEventListener('click',(e)=
         editPostScreen.classList.remove('popup');
 
     }, 300);
+})
+
+document.querySelector('.instagram').addEventListener('click',()=>{
+    open('https://www.instagram.com/isma.hr17/')
+})
+document.querySelector('.github').addEventListener('click',()=>{
+    open('https://github.com/XLoky')
 })
 getApi()
