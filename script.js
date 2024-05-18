@@ -37,7 +37,6 @@ const filereader = new FileReader();
 uploadInput.addEventListener('change',(e)=>{
     filereader.readAsDataURL(uploadInput.files[0]);
     filereader.addEventListener('load',(e)=>{
-        console.log(e)
         if(uploadInput.files[0].name.includes('.png') || uploadInput.files[0].name.includes('.jpg') || uploadInput.files[0].name.includes('.jpeg')){
             // uploadScreen.style.display = 'none';
             uploadScreen.classList.remove('popup');
@@ -66,13 +65,11 @@ uploadInput.addEventListener('drop',()=>{
 })
 uploadInput.addEventListener('dragleave',()=>{
     document.querySelector('.upload-screen__filereader-box').setAttribute('style','filter: brightness(1)');
-    console.count()
 });
 
 document.querySelector(".loading").style.left = `${document.querySelector("main").clientWidth / 2 + 330}px`;
 
 const changeVideo = (e) => {
-    console.count()
     const order = ['center','right','rightright','leftleft','left'];
     let clicked;
 
@@ -158,7 +155,6 @@ document.querySelector('.top-slider__right-arrow').addEventListener('click',(e)=
 })
 
 for(const video of videos){
-    console.log(video)
     video.addEventListener('click',(e)=>{
         changeVideo(e.target.classList[0])
     })
@@ -170,7 +166,6 @@ const cattree = (e) => {
     document.querySelector('.cat-tree-open-comfirmation__btn-div div:first-child').addEventListener('click',()=>{
         catTreeComfirmationScreen.classList.remove('popup');
         catTreeComfirmationScreen.style.display = 'none';
-        console.log(e)
         catTreeScreen.classList.add('popup');
         catTreeScreen.style.display = 'flex';
 
@@ -180,28 +175,23 @@ const cattree = (e) => {
 
         document.querySelectorAll('.cat-tree__div > div')[0].addEventListener('click',()=>{
             let catId = e.target.parentElement.parentElement.id.substring(3,4);
-            console.log(apiInfo[catId].breeds[0]);
             open(apiInfo[catId].breeds[0].cfa_url)
         });
         document.querySelectorAll('.cat-tree__div > div')[1].addEventListener('click',()=>{
             let catId = e.target.parentElement.parentElement.id.substring(3,4);
-            console.log(apiInfo[catId].breeds[0]);
             open(apiInfo[catId].breeds[0].vcahospitals_url)
         })
         document.querySelectorAll('.cat-tree__div > div')[2].addEventListener('click',()=>{
             let catId = e.target.parentElement.parentElement.id.substring(3,4);
-            console.log(apiInfo[catId].breeds[0]);
             open(apiInfo[catId].breeds[0].vetstreet_url)
         })
         document.querySelectorAll('.cat-tree__div > div')[3].addEventListener('click',()=>{
             let catId = e.target.parentElement.parentElement.id.substring(3,4);
-            console.log(apiInfo[catId].breeds[0]);
             open(apiInfo[catId].breeds[0].wikipedia_url)
         })
 
         document.querySelector('.cat-tree').addEventListener('click',e=>{
             if(e.target.classList[0] == 'cat-tree'){
-                console.log("a")
                 catTreeScreen.classList.remove('popup');
                 catTreeScreen.style.display = 'none';
             }
@@ -326,10 +316,11 @@ const generatePost = () => {
     //        </div>
     //    </div>
     // </div>`;
+    console.log(catCount)
     catCount++;
     }catch(e){
         if(catCount <= 100){
-            console.log(e)
+            console.log(catCount)
             catCount++;
             generatePost();
         }else{
@@ -341,7 +332,6 @@ const generatePost = () => {
 const comment = e => {
     const text = e.target.parentElement.children[0].value;
     if(text != "" && !e.target.classList.contains("commented") && e.target.parentElement.children[0].classList[0] == 'input-bar__text'){
-        console.log(e.target.parentElement.parentElement);
         let pfp = document.createElement("DIV");
         pfp.classList.add("comment__profile-picture");
         let img = document.createElement('IMG');
@@ -425,14 +415,15 @@ const follow = e => {
 }
 
 const getApi = async () => {
-    await fetch("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1",{
+    document.querySelector('.loading').style.top = '32px';
+    await fetch("https://api.thecatapi.com/v1/images/search?limit=100&has_breeds=1",{
         request: "GET",
         headers: {"x-api-key": "live_LpcOOa2VUTBXwXsRz3h1r3iyjibZtUVDGvyna8TkQy814hIixStPaRWwYvxf6r39"}
     }).then(res => res.json()).then(res => {
+        document.querySelector('.loading').style.top = '0px';
         //THIS WILL EXECUTE WHEN API IS LOADED
         //WHEN LOADING THE PAGE IT WILL AUTOMATICALLY GENERATE TWO POSTS
         apiInfo = res;
-        console.log(apiInfo)
         for(let i = 0; i < 2; i++){
             generatePost();
         }
@@ -454,7 +445,6 @@ const getApi = async () => {
 
 addEventListener("scroll",e => {
     if(scrollY + document.querySelector("aside").clientHeight >= document.body.clientHeight){ //ASIDE ACTS LIKE AN 1VH
-        console.log("ahora");
         setTimeout(() => {
             if(scrollY != 0){
                 for(let i = 0; i < 2; i++){
