@@ -425,7 +425,7 @@ const follow = e => {
 }
 
 const getApi = async () => {
-    await fetch("https://api.thecatapi.com/v1/images/search?limit=100&has_breeds=1",{
+    await fetch("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1",{
         request: "GET",
         headers: {"x-api-key": "live_LpcOOa2VUTBXwXsRz3h1r3iyjibZtUVDGvyna8TkQy814hIixStPaRWwYvxf6r39"}
     }).then(res => res.json()).then(res => {
@@ -468,7 +468,7 @@ addEventListener("scroll",e => {
                 i.addEventListener("click",follow);
             }
             for(let i of document.querySelectorAll('.cat-post__img-container')){
-                if(i.classList.includes('sharedPost')){
+                if(i.classList.contains('sharedPost')){
                     
                 }else{
                     i.addEventListener('click',cattree);
