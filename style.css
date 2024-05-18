@@ -89,6 +89,26 @@ aside{
     margin: 20px;
     gap: 12px;
 }
+.container__max{
+    margin-top: 16px;
+    display: none;
+}
+.container__max-p{
+    font-size: 16px;
+    color: #e48;
+    text-align: center;
+}
+.vanish{
+    animation: vanish 2s;
+    animation-fill-mode: forwards;
+}
+@keyframes vanish {
+    0%{
+        opacity: 1;
+    }100%{
+        opacity: 0;
+    }
+}
 .list__item{
     display: flex;
     align-items: center;
@@ -128,6 +148,7 @@ aside{
 }
 .container__upload{
     width: 280px;
+    min-height: 280px;
     height: 280px;
     border-radius: 8px;
     background-color: var(--color-two-dark);
@@ -140,6 +161,8 @@ aside{
     padding: 16px;
     transition: filter .3s;
     cursor: pointer;
+    position: absolute;
+    bottom: 16px;
 }
 .container__upload:hover{
     filter: brightness(.8);
@@ -667,6 +690,11 @@ main{
     width: 70%;
     text-align: center;
     user-select: none;
+}
+.upload-screen__p{
+    font-size: 26px;
+    color: #e48;
+    display: none;
 }
 .upload-screen__filereader-box{
     position: relative;

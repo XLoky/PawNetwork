@@ -12,17 +12,11 @@ const commentPreset =
 {
     name: 
     [
-        'MEOWMASTER', 'PURRFECTPAWS42', 'FELINEFANATIC', 
-        'WHISKERWONDER123', 'CATNIPCONNOISSEUR88', 'KITTYKRAZE555', 
-        'CLAWCRAFTER', 'PAWSITIVEVIBES777', 'CATWHISPERER314', 
-        'FURRYFELINE', 'PURRSONALITY1234', 'WHISKERWISDOM999', 
-        'PAWPROWESS50', 'CATCHATCHAMPION', 'FURBALLFRENZY333'
+        "WhiskerWizard", "PurrfectlyMeow", "KittyKatCraze", "FelineFury", "MeowMaven", "ClawdiusMaximus", "PawsomePurrs", "CatNapChampion", "MittensTheGreat", "PurrPower", "WhiskerWhisperer", "KittyKisses", "PurrPal", "CuddleCat", "Meowster", "PawPrints", "FelixFeline", "LunaPurr", "WhiskerWonder", "Clawtastic", "KittyKraze", "FelineFiesta", "Purrfectionist", "MewMew", "PurrPrince", "PawPatrol", "CatnipConnoisseur", "MeowMachine", "WhiskerWiggle", "FuzzyFeline", "MittensMagic", "PurrPet", "CuddleKitty", "MewMingle", "PawsAndClaws", "KittyCuddle", "PurrKitten", "WhiskerWanderer", "ClawCraft", "MeowMentor", "FelineFun", "KittyKompanion", "PurrParty", "PawPals", "WhiskerWish", "MittensMystery", "CuddleCatnip", "PurrPatrol", "FurryFeline", "MeowMingle"
     ],
     comment:
     [
-        'AWESOME!!', "I'D REALLY LIKE TO SEE MORE LIKE THIS!",
-        '🐱', "YOU'RE PURRRTIFUL :P", 'TELL US MORE!!!',
-        'I WANNA BE LIKE YOU :((('
+        "AWESOME!!", "I'D REALLY LIKE TO SEE MORE LIKE THIS!", "🐱", "YOU'RE PURRRTIFUL :P", "TELL US MORE!!!", "I WANNA BE LIKE YOU :(((", "SO CUTE!", "ADORABLE 😻", "LOVE THIS!", "PURRFECT!", "SUCH A SWEETIE!", "MEOWVELOUS!", "CAT-TASTIC!", "I CAN'T HANDLE THE CUTENESS!", "MORE CATS PLEASE!", "THIS MADE MY DAY!", "CAT LOVERS UNITE!", "TOTALLY PAWSOME!", "MEOW MEOW!", "KITTY LOVE!", "SO PRECIOUS!", "CAN'T GET ENOUGH!", "LOVE THE WHISKERS!", "KITTY KISSES!", "PURRFECTLY ADORABLE!", "FELINE FINE!", "CUTENESS OVERLOAD!", "PURRFECTION!", "ABSOLUTELY MEOWSOME!", "CATITUDE!", "LOVE THIS FURRY FRIEND!", "PAWESOME POST!", "KITTY CUTENESS!", "SO FLUFFY!", "CAT NAP TIME!", "MEOWING WITH JOY!", "LOOK AT THOSE EYES!", "PAW-SITIVELY ADORABLE!", "SUCH GRACE!", "CAN'T STOP SMILING!", "CAT MAGIC!", "FELINE FRIEND!", "PAWS AND PURRS!", "CAT NAPS FOR DAYS!", "CUDDLE TIME!", "MEOWGICAL!", "KITTEN KISSES!", "PAW-LEASE POST MORE!", "FURRY LITTLE BUNDLE!"
     ]
 }
 
@@ -39,6 +33,7 @@ uploadInput.addEventListener('change',(e)=>{
     filereader.addEventListener('load',(e)=>{
         if(uploadInput.files[0].name.includes('.png') || uploadInput.files[0].name.includes('.jpg') || uploadInput.files[0].name.includes('.jpeg')){
             // uploadScreen.style.display = 'none';
+            document.querySelector('.upload-screen__p').style.display = 'none';
             uploadScreen.classList.remove('popup');
             uploadScreen.classList.add('unpopup');
             editPostScreen.style.display = 'flex';
@@ -53,6 +48,8 @@ uploadInput.addEventListener('change',(e)=>{
                 uploadScreen.classList.remove('unpopup');
                 uploadScreen.style.display = 'none';
             }, 200);
+        } else{
+            document.querySelector('.upload-screen__p').style.display = 'block';
         }
     })
 });
@@ -372,7 +369,7 @@ addEventListener('keypress',(e)=>{
 
 const scrollToCat = () => scroll(0, document.getElementById(followed[followed.length - 1]).offsetHeight);
 const changeFollowList = (add,e,catName) => {
-    if(add){
+    if(add && document.querySelector('.followed__list').clientHeight < document.querySelector('.container').clientHeight - 500){
         let listItemCloned = document.querySelector(".list__item").cloneNode(true);
         listItemCloned.style.display = 'flex';
         listItemCloned.href = `#${e.target.parentElement.parentElement.parentElement.parentElement.id}`;
@@ -382,30 +379,41 @@ const changeFollowList = (add,e,catName) => {
 
         document.querySelector(".followed__list").appendChild(listItemCloned);
         //NEEDED TO CHANGE EVERYTHING TO APPENDCHILD TO FIX ERRORS
-    }else{
+    }else if(document.querySelector('.followed__list').clientHeight < document.querySelector('.container').clientHeight - 500){
         for( let i of document.querySelector('.followed__list').children ){
             if (i.children[1].textContent == catName) i.parentElement.removeChild(i);
         }
+    }else{
+        document.querySelector('.container__three-dots').style.display = 'flex';
     }
 }
 
 const follow = e => {
-    if(e.target.classList.contains("fa-regular")){
-        e.target.classList.replace("fa-regular","fa-solid");
-        e.target.style.color = '#522';
-        followed.push(e.target.parentElement.parentElement.parentElement.parentElement.id);
-        changeFollowList(true,e);
-    }
-    else{
-        e.target.classList.replace("fa-solid","fa-regular");
-        e.target.style.color = '#223';
-        
-        const index = followed.indexOf(e.target.parentElement.parentElement.parentElement.parentElement.id);
-        if (index > -1) { // only splice followed when item is found
-          followed.splice(index, 1); // 2nd parameter means remove one item only
+        if(document.querySelector('.followed__list').clientHeight < document.querySelector('.container').clientHeight - 500){
+            if(e.target.classList.contains("fa-regular")){
+                e.target.classList.replace("fa-regular","fa-solid");
+                e.target.style.color = '#522';
+                followed.push(e.target.parentElement.parentElement.parentElement.parentElement.id);
+                changeFollowList(true,e);
+            }
+            else{
+                e.target.classList.replace("fa-solid","fa-regular");
+                e.target.style.color = '#223';
+                
+                const index = followed.indexOf(e.target.parentElement.parentElement.parentElement.parentElement.id);
+                if (index > -1) { // only splice followed when item is found
+                  followed.splice(index, 1); // 2nd parameter means remove one item only
+                }
+                changeFollowList(false,e,e.target.parentElement.parentElement.children[1].textContent); //SECOND PARAMETER = CAT NAME, MAY BE NECCESARY TO DELETE IT FROM THE LIST
+            }
+        }else{
+            document.querySelector('.container__max').style.display = 'block';
+            document.querySelector('.container__max').classList.add('vanish');
+            setTimeout(() => {
+                document.querySelector('.container__max').classList.remove('vanish');
+                document.querySelector('.container__max').style.display = 'none';
+            }, 2000);
         }
-        changeFollowList(false,e,e.target.parentElement.parentElement.children[1].textContent); //SECOND PARAMETER = CAT NAME, MAY BE NECCESARY TO DELETE IT FROM THE LIST
-    }
 
     if(followed.length == 0){
         document.querySelector('.container__placeholder').style.display = 'block';
@@ -413,6 +421,22 @@ const follow = e => {
         document.querySelector('.container__placeholder').style.display = 'none';
     }
 }
+
+function shuffle(array) {
+    let currentIndex = array.length;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  }
 
 const getApi = async () => {
     document.querySelector('.loading').style.top = '32px';
@@ -423,6 +447,7 @@ const getApi = async () => {
         document.querySelector('.loading').style.top = '0px';
         //THIS WILL EXECUTE WHEN API IS LOADED
         //WHEN LOADING THE PAGE IT WILL AUTOMATICALLY GENERATE TWO POSTS
+        shuffle(res);
         apiInfo = res;
         for(let i = 0; i < 2; i++){
             generatePost();
@@ -444,7 +469,7 @@ const getApi = async () => {
 };
 
 addEventListener("scroll",e => {
-    if(scrollY + document.querySelector("aside").clientHeight >= document.body.clientHeight){ //ASIDE ACTS LIKE AN 1VH
+    if(scrollY + document.querySelector("aside").clientHeight >= document.body.clientHeight - 3){ //ASIDE ACTS LIKE AN 1VH
         setTimeout(() => {
             if(scrollY != 0){
                 for(let i = 0; i < 2; i++){
@@ -635,6 +660,7 @@ shareBtn.addEventListener('click',(e)=>{
 
 document.querySelector('.upload-screen__close').addEventListener('click',(e)=>{
     uploadScreen.classList.add('unpopup');
+    document.querySelector('.upload-screen__p').style.display = 'block';
     setTimeout(() => {
         uploadScreen.style.display = 'none';
         uploadScreen.classList.remove('unpopup');
