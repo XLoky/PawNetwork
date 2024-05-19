@@ -28,6 +28,9 @@ document.querySelector('.container__upload').addEventListener('click',()=>{
 
 const uploadInput = document.getElementById('uploadInput');
 const filereader = new FileReader();
+uploadInput.addEventListener('click',()=>{
+    uploadInput.value = null;
+})
 uploadInput.addEventListener('change',(e)=>{
     filereader.readAsDataURL(uploadInput.files[0]);
     filereader.addEventListener('load',(e)=>{
@@ -58,6 +61,7 @@ uploadInput.addEventListener('dragover',(e)=>{
     document.querySelector('.upload-screen__filereader-box').setAttribute('style','filter: brightness(.85)');
 });
 uploadInput.addEventListener('drop',()=>{
+    uploadInput.value = null;
     document.querySelector('.upload-screen__filereader-box').setAttribute('style','filter: brightness(1)');
 })
 uploadInput.addEventListener('dragleave',()=>{

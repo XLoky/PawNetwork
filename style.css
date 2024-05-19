@@ -372,7 +372,7 @@ main{
     position: relative;
     height: 80px;
     width: 80px;
-    background-color: #223;
+    background-color: #222;
     border-radius: 50%;
     overflow: hidden;
     min-width: 80px;
@@ -381,7 +381,7 @@ main{
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border: solid #223 3px;
+    border: solid #222 3px;
     border-radius: 50%;
 }
 .profile__h4{
@@ -444,6 +444,7 @@ main{
 .comments__input-bar > input{
     height: 100%;
     padding: 1em;
+    color: #222;
 }
 .comments__input-bar input:first-child{
     background-color: #eee;
