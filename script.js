@@ -246,7 +246,8 @@ const generatePost = () => {
 
         const catPostComments = document.createElement('DIV');
         catPostComments.classList.add('cat-post__comments')
-        const commentsComment = document.createElement('DIV');
+        for(let i = 0; i < Math.floor(Math.random() * 5) + 1; i++){
+            const commentsComment = document.createElement('DIV');
         commentsComment.classList.add('comments__comment')
         const commentProfilePicture = document.createElement('DIV');
         commentProfilePicture.classList.add('comment__profile-picture')
@@ -262,6 +263,8 @@ const generatePost = () => {
         commentsComment.appendChild(commentProfilePicture);
         commentsComment.appendChild(commentProfileName);
         commentsComment.appendChild(commentP);
+        catPostComments.appendChild(commentsComment);
+        }
 
         const commentsInputBar = document.createElement('DIV');
         commentsInputBar.classList.add('comments__input-bar');
@@ -273,8 +276,9 @@ const generatePost = () => {
         commentsInputBar.appendChild(input1);
         commentsInputBar.appendChild(input2);
 
-        catPostComments.appendChild(commentsComment);
-        catPostComments.appendChild(commentsInputBar);
+        commentsInputBar.style.gridArea = 'comments';
+        commentsInputBar.style.zIndex = 10;
+        catpost.appendChild(commentsInputBar);
 
         catpost.appendChild(catPostImgContainer);
         catpost.appendChild(catPostDesc);
@@ -282,41 +286,6 @@ const generatePost = () => {
         
         document.querySelector('main').appendChild(catpost);
 
-    //     document.querySelector("main").innerHTML += 
-    //    `<div class="cat-post" id="cat${catCount}" followers="${Math.floor(Math.random()*10000)}">
-    
-    //    <div class="cat-post__img-container">
-    //        <img class="post-img-container__img" src="${apiInfo[catCount].url}">
-    //    </div>
-    
-    //    <div class="cat-post__description">
-    //        <div class="description__profile">
-    //            <div class="profile__img-container">
-    //                <img class="img-container__img" src="pfp/${Math.floor(Math.random() * 14) + 1}.webp">
-    //            </div>
-    //            <h4 class="profile__h4">${apiInfo[catCount].breeds[0].name}</h4>
-    //            <div class="profile__follow">
-    //                <i class="fa-regular fa-heart"></i>
-    //            </div>
-    //        </div>
-    //        <p class="description__p">${apiInfo[catCount].breeds[0].description}</p>
-    //    </div>
-    
-    //    <div class="cat-post__comments">
-    //        <div class="comments__comment">
-    //            <div class="comment__profile-picture">
-    //                 <img src="pfp/${Math.floor(Math.random() * 14) + 1}.webp">
-    //            </div>
-    //            <div class="comment__profile-name">${commentPreset.name[Math.floor(Math.random() * commentPreset.name.length)]}:</div>
-    //            <div class="comment__p">${commentPreset.comment[Math.floor(Math.random() * commentPreset.comment.length)]}</div>
-    //        </div>
-    
-    //        <div class="comments__input-bar">
-    //            <input type="text" placeholder="Add a comment..." class="input-bar__text" spellcheck="false">
-    //            <input type="button" value="Send">
-    //        </div>
-    //    </div>
-    // </div>`;
     console.log(catCount)
     catCount++;
     }catch(e){
@@ -354,7 +323,7 @@ const comment = e => {
         comment.appendChild(profileName);
         comment.appendChild(p);
 
-        e.target.parentElement.parentElement.appendChild(comment);
+        e.target.parentNode.parentNode.children[3].appendChild(comment);
         e.target.classList.add("commented");
         e.target.parentElement.children[0].value = "";
 
@@ -445,7 +414,7 @@ function shuffle(array) {
 const getApi = async () => {
     document.querySelector('.loading').style.top = '32px';
     await fetch("https://api.thecatapi.com/v1/images/search?limit=100&has_breeds=1",{
-        request: "GET",
+        method: "GET",
         headers: {"x-api-key": "live_LpcOOa2VUTBXwXsRz3h1r3iyjibZtUVDGvyna8TkQy814hIixStPaRWwYvxf6r39"}
     }).then(res => res.json()).then(res => {
         document.querySelector('.loading').style.top = '0px';

@@ -295,7 +295,7 @@ main{
     box-shadow: 0 0 10px var(--color-four), 0 0 10px var(--color-four-dark) inset;    
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 260px;
     grid-template-areas: 
     "photo description"
     "photo comments";
@@ -397,13 +397,17 @@ main{
     grid-area: comments;
     height: 100%;
     width: 100%;
+    max-height: 260px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     background-color: #0002;
     border-radius: 7px;
-    padding: 8px;
+    padding: 8px 8px 56px 8px;
     position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-color: #0004 var(--color-four-dark);
 }
 .comments__comment{
     height: 60px;
@@ -411,6 +415,7 @@ main{
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
+    margin-bottom: 8px;
 }
 .comments__comment > div:nth-child(3){
     width: 100%;
@@ -435,11 +440,12 @@ main{
 }
 .comments__input-bar{
     position: absolute;
+    justify-self: flex-end;
     bottom: 0;
     height: 40px;
-    width: 100%;
+    width: calc(100% - 15px);
     display: flex;
-    transform: translateX(-8px);
+    transform: translateX(-15px);
 }
 .comments__input-bar > input{
     height: 100%;
@@ -455,7 +461,6 @@ main{
     cursor: pointer;
     background-color: var(--color-two);
     transition: filter .3s;
-    border-radius: 0 0 6px 0;
 }
 .comments__input-bar input:nth-child(2):hover{
     filter: brightness(.9);
