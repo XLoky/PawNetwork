@@ -68,7 +68,7 @@ uploadInput.addEventListener('dragleave',()=>{
     document.querySelector('.upload-screen__filereader-box').setAttribute('style','filter: brightness(1)');
 });
 
-document.querySelector(".loading").style.left = `${document.querySelector("main").clientWidth / 2 + 330}px`;
+document.querySelector(".loading").style.left = `${document.querySelector('main').clientWidth / 2 + 360}px`;
 
 const changeVideo = (e) => {
     const order = ['center','right','rightright','leftleft','left'];
@@ -207,6 +207,7 @@ const cattree = (e) => {
 const generatePost = () => {
     try{
         const catpost = document.createElement('DIV');
+
         catpost.classList.add('cat-post'); catpost.id = `cat${catCount}`; catpost.setAttribute('followers',Math.floor(Math.random()*10000));
 
         const catPostImgContainer = document.createElement('DIV');
@@ -222,6 +223,11 @@ const generatePost = () => {
         descriptionProfile.classList.add('description__profile');
         const profileImgContainer = document.createElement('DIV');
         profileImgContainer.classList.add('profile__img-container');
+        profileImgContainer.addEventListener('click',()=>{
+            open(`profiles/profiles.html`)
+            let id = catCount;
+            localStorage.setItem('api', JSON.stringify(apiInfo[catpost.id.substring(3,4)]));
+        })
         const imgContainerImg = document.createElement('IMG');
         imgContainerImg.classList.add('img-container__img');
         imgContainerImg.src = `pfp/${Math.floor(Math.random() * 14) + 1}.webp`;
@@ -422,6 +428,14 @@ const getApi = async () => {
         //WHEN LOADING THE PAGE IT WILL AUTOMATICALLY GENERATE TWO POSTS
         shuffle(res);
         apiInfo = res;
+        console.log(res)
+
+        navigator.serviceWorker.register('apiStorage.js');
+        navigator.serviceWorker.ready.then(sw => {
+            console.log('enviado')
+            sw.active.postMessage(res)
+        })
+
         for(let i = 0; i < 2; i++){
             generatePost();
         }

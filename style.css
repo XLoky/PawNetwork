@@ -376,6 +376,12 @@ main{
     border-radius: 50%;
     overflow: hidden;
     min-width: 80px;
+    transition: .3s;
+    cursor: pointer;
+}
+.profile__img-container:hover{
+    scale: 95%;
+    filter: brightness(.8);
 }
 .img-container__img{
     height: 100%;
